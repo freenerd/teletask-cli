@@ -63,7 +63,7 @@ class TeletaskFeed
   def download_files
     puts "Downloading files. Started ..."
 
-    @tracks.slice(10,1).each do |track|
+    @tracks.each do |track|
       `wget #{track["location"].first}`
     end
 
