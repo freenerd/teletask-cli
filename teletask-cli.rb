@@ -15,13 +15,6 @@ class TeletaskFeed
     get_feed
   end
 
-  def get_feed
-    uri = URI(@location)
-    raise "Location must be valid uri, but is #{@location}" unless uri
-
-    @input_xml = XmlSimple.xml_in(Net::HTTP.get(uri))
-  end
-
   def parse_tracks
     @tracks = []
 
@@ -42,7 +35,9 @@ class TeletaskFeed
   end
 
   def write_xspf
-    raise "call parse_tracks before writing xspf" if @tracks.empty?
+    raise "Error: call parse_tracks before writing xspf" if @tracks.empty?
+
+    puts "Writing xspf to #{@output_path}. Started ..."
 
     output = {
       "playlist" => {
@@ -59,10 +54,36 @@ class TeletaskFeed
     File.open(@output_path, "w") do |file|
       file.write(XmlSimple.xml_out(output, "keeproot" => true))
     end
-    puts "Written xspf to #{@output_path}"
+
+    puts "Writing xspf to #{@output_path}. Finished"
+
+    self
   end
 
-  self
+  def download_files
+    puts "Downloading files. Started ..."
+
+    @tracks.slice(10,1).each do |track|
+      `wget #{track["location"].first}`
+    end
+
+    puts "Downloading files. Finished"
+
+    self
+  end
+
+  private
+
+  def get_feed
+    puts "Fetching feed. Started ..."
+
+    uri = URI(@location)
+    raise "Location must be valid uri, but is #{@location}" unless uri
+
+    @input_xml = XmlSimple.xml_in(Net::HTTP.get(uri))
+
+    puts "Fetching feed. Finished"
+  end
 end
 
 options = {}
@@ -70,8 +91,12 @@ options_parser =
   OptionParser.new do |opts|
     opts.banner = "Usage: teletask-cli.rb [options]"
 
-    opts.on("-f", "--feed LOCATION", "Location url of the feed to get") do |location|
-      options[:location] = location
+    opts.on("-x", "--xspf LOCATION", "Generates an xspf playlist from a feed at location") do |location|
+      options[:xspf] = location
+    end
+
+    opts.on("-d", "--download LOCATION", "Downloads all videos from a feed at location") do |location|
+      options[:download] = location
     end
 
     opts.on_tail("-h", "--help", "Show this message") do
@@ -81,11 +106,16 @@ options_parser =
   end
 options_parser.parse!
 
-if(options[:location])
+if(options[:xspf])
   TeletaskFeed
-    .new(options[:location])
+    .new(options[:xspf])
     .parse_tracks
     .write_xspf
+elsif(options[:download])
+  TeletaskFeed
+    .new(options[:download])
+    .parse_tracks
+    .download_files
 else
   puts options_parser
 end

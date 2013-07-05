@@ -12,13 +12,25 @@ It's a ruby script. I used ruby 2.0 for development, but it should also run with
   bundle install
 ```
 
+To download videos you need the `wget` tool. It usually ships with your OS, otherwise you can use your favorite packet management tool to download it, e.g. via `brew install wget` or `apt-get install wget`.
+
 ## Features
+
+As input you always need to provide a feed url. You can obtain the url from Teletask on the lecture page on the right top corner. It's not the rss-logo (`Lecture-Feed of Series`) but the iTunes-y cube next to it (`Feed of Series`).
+
 ### Feed to XSPF
-  `ruby teletask-cli.rb --feed http://tele-task.de/feeds/series/946/`
+  `ruby teletask-cli.rb --xspf http://tele-task.de/feeds/series/946/`
+  `ruby teletask-cli.rb -x http://tele-task.de/feeds/series/946/`
 
   XSPF is a playlist format that can be read by many popular media players, e.g. VLC. It also accepts urls, thus you can stream right away.
 
-  The cli option `--feed` accepts a url to a series-feed on tele-task. You can obtain the url on the lecture page on the right top corner. It's not the rss-logo (Lecture-Feed of Series) but the iTunes-y cube next to it (Feed of Series). The generated `output.xspf` links directly to the .mp4 assets on the teletask server. You can just drag-and-drop it into your favorite player and it should stream nicely.
+  The cli option `--xspf` accepts a url to a series-feed on Teletask. The generated `output.xspf` links directly to the .mp4 assets on the Teletask servers. You should be able to drag-and-drop the xspf playlist into your favorite player and stream the videos directly.
+
+### Download videos
+  `ruby teletask-cli.rb --download http://tele-task.de/feeds/series/946/`
+  `ruby teletask-cli.rb -d http://tele-task.de/feeds/series/946/`
+
+  You can download all .mp4 video assets by using the `-x` cli option with the feed url. The files will be saved with the original file names in the folder you executed the script in. Downloading happens via `wget`.
 
 ## Contributing
 Fork away. I'm happy to accept pull requests, there is a lot of stuff to be added.
