@@ -1,8 +1,9 @@
-require 'xmlsimple'
-
 require 'time'
 require 'net/http'
 require 'optparse'
+
+require 'xmlsimple'
+require 'chronic_duration'
 
 class TeletaskFeed
   def initialize(location)
@@ -27,7 +28,8 @@ class TeletaskFeed
 
       @tracks.push({
         "title" => [title],
-        "location" => [d["link"].first]
+        "location" => [d["link"].first],
+        "duration" => [duration(d["duration"].first)]
       })
     end
 
@@ -83,6 +85,11 @@ class TeletaskFeed
     @input_xml = XmlSimple.xml_in(Net::HTTP.get(uri))
 
     puts "Fetching feed. Finished"
+  end
+
+  # Converts duration strings like 00:09:26 to milliseconds
+  def duration(duration_string)
+    ChronicDuration.parse(duration_string) * 1000
   end
 end
 

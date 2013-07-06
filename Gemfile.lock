@@ -1,10 +1,14 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    chronic_duration (0.10.2)
+      numerizer (~> 0.1.1)
+    numerizer (0.1.1)
     xml-simple (1.1.2)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  chronic_duration
   xml-simple
