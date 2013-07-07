@@ -19,7 +19,7 @@ class TeletaskFeed
   def parse_tracks
     @tracks = []
 
-   raise "Can't parse XML. Right teletask feed series URL?" unless @input_xml["channel"].first["item"]
+   raise "ERROR: Can't parse tracks out of feed. Does it have .mp4 assets? Is it the right Teletask feed series URL?" unless @input_xml["channel"].first["item"]
 
     @input_xml["channel"].first["item"].each do |d|
       title = Time.parse(d["pubDate"].first).strftime("%Y-%m-%d")
@@ -126,4 +126,3 @@ elsif(options[:download])
 else
   puts options_parser
 end
-
