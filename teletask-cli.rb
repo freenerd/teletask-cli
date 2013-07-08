@@ -1,97 +1,10 @@
-require 'time'
-require 'net/http'
+#
+# This script handles the command line input only
+# The actual logic is in /lib
+#
+
+require_relative 'lib/teletask_feed.rb'
 require 'optparse'
-
-require 'xmlsimple'
-require 'chronic_duration'
-
-class TeletaskFeed
-  def initialize(location)
-    @location = location
-    @input_xml = nil
-    @output_path = "output.xspf"
-
-    @tracks = []
-
-    get_feed
-  end
-
-  def parse_tracks
-    @tracks = []
-
-   raise "ERROR: Can't parse tracks out of feed. Does it have .mp4 assets? Is it the right Teletask feed series URL?" unless @input_xml["channel"].first["item"]
-
-    @input_xml["channel"].first["item"].each do |d|
-      title = Time.parse(d["pubDate"].first).strftime("%Y-%m-%d")
-      title += " "
-      title += d["title"].first
-
-      @tracks.push({
-        "title" => [title],
-        "location" => [d["link"].first],
-        "duration" => [duration(d["duration"].first)]
-      })
-    end
-
-    self
-  end
-
-  def write_xspf
-    raise "Error: call parse_tracks before writing xspf" if @tracks.empty?
-
-    puts "Writing xspf to #{@output_path}. Started ..."
-
-    output = {
-      "playlist" => {
-        "version" => "1",
-        "xmlns" => "http://xspf.org/ns/0/",
-        "trackList" => [
-          {
-            "track" => @tracks
-          }
-        ]
-      }
-    }
-
-    File.open(@output_path, "w") do |file|
-      file.write(XmlSimple.xml_out(output, "keeproot" => true))
-    end
-
-    puts "Writing xspf to #{@output_path}. Finished"
-
-    self
-  end
-
-  def download_files
-    puts "Downloading files. Started ..."
-
-    @tracks.each do |track|
-      `wget #{track["location"].first}`
-    end
-
-    puts "Downloading files. Finished"
-
-    self
-  end
-
-  private
-
-  def get_feed
-    puts "Fetching feed. Started ..."
-
-    uri = URI(@location)
-    raise "Location must be valid uri, but is #{@location}" unless uri
-
-    @input_xml = XmlSimple.xml_in(Net::HTTP.get(uri))
-
-    puts "Fetching feed. Finished"
-  end
-
-  # Converts duration strings like 00:09:26 to milliseconds
-  def duration(duration_string)
-    ChronicDuration.parse(duration_string) * 1000
-  end
-end
 
 options = {}
 options_parser =
