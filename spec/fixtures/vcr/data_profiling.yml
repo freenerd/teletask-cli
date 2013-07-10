@@ -1,0 +1,99 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://tele-task.de/feeds/series/948/
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - '*/*'
+      User-Agent:
+      - Ruby
+      Host:
+      - tele-task.de
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 10 Jul 2013 16:06:58 GMT
+      Server:
+      - Apache/2.2.16 (Debian)
+      Content-Length:
+      - '1434'
+      Content-Language:
+      - en
+      Expires:
+      - Wed, 10 Jul 2013 16:16:58 GMT
+      Vary:
+      - Accept-Language,Cookie,Accept-Encoding
+      Last-Modified:
+      - Wed, 10 Jul 2013 16:06:58 GMT
+      Cache-Control:
+      - max-age=600
+      Content-Type:
+      - application/rss+xml; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<rss xmlns:atom=\"http://www.w3.org/2005/Atom\"
+        xmlns:itunes=\"http://www.itunes.com/dtds/podcast-1.0.dtd\" version=\"2.0\"
+        xmlns:itunesu=\"http://www.itunesu.com/feed\"><channel><title>Data Profiling
+        and Data Cleansing (SS 2013) - www.tele-TASK.de</title><link>http://www.tele-task.de/archive/series/overview/948/</link><description>According
+        to Wikipedia, data profiling is the process of examining the data available
+        in an existing data source [...] and collecting statistics and information
+        about that data. It encompasses a vast array of methods to examine data sets
+        and produce metadata. Among the simpler results are statistics, such as the
+        number of null values and distinct values in a column, its data type, or the
+        most frequent patterns of its data values. Metadata that are more difficult
+        to compute usually involve multiple columns, such as inclusion dependencies
+        or functional dependencies between columns. More advanced techniques detect
+        approximate properties or conditional properties of the data set at hand.
+        The first part of the lecture examines efficient detection methods for these
+        properties.\r\n\r\nData profiling is relevant as a preparatory step to many
+        use cases, such as query optimization, data mining, data integration, and
+        data cleansing.\r\n\r\nMany of the insights gained during data profiling point
+        to deficiencies of the data. Profiling reveals data errors, such as inconsistent
+        formatting within a column, missing values, or outliers. Profiling results
+        can also be used to measure and monitor the general quality of a dataset,
+        for instance by determining the number of records that do not conform to previously
+        established constraints. The second part of the lecture examines various methods
+        and algorithms to improve the quality of data, with an emphasis on the many
+        existing duplicate detection approaches.</description><atom:link href=\"http://www.tele-task.de\"
+        rel=\"self\"></atom:link><language>en</language><lastBuildDate>Wed, 10 Jul
+        2013 18:06:58 -0000</lastBuildDate><copyright>&amp;#x2117; &amp;amp; &amp;#xA9;
+        2009 Hasso Plattner Institute, tele-TASK</copyright><itunes:subtitle>High
+        quality e-learning content created with tele-TASK - more than video! Powered
+        by Hasso Plattner Institute (HPI)</itunes:subtitle><itunes:author> Jana Bauckmann,
+        \ Arvid Heise,  Anja Jentzsch, Prof. Dr. Felix Naumann,  Yannick Saillet,
+        \ Niels Weigel</itunes:author><itunes:summary>According to Wikipedia, data
+        profiling is the process of examining the data available in an existing data
+        source [...] and collecting statistics and information about that data. It
+        encompasses a vast array of methods to examine data sets and produce metadata.
+        Among the simpler results are statistics, such as the number of null values
+        and distinct values in a column, its data type, or the most frequent patterns
+        of its data values. Metadata that are more difficult to compute usually involve
+        multiple columns, such as inclusion dependencies or functional dependencies
+        between columns. More advanced techniques detect approximate properties or
+        conditional properties of the data set at hand. The first part of the lecture
+        examines efficient detection methods for these properties.\r\n\r\nData profiling
+        is relevant as a preparatory step to many use cases, such as query optimization,
+        data mining, data integration, and data cleansing.\r\n\r\nMany of the insights
+        gained during data profiling point to deficiencies of the data. Profiling
+        reveals data errors, such as inconsistent formatting within a column, missing
+        values, or outliers. Profiling results can also be used to measure and monitor
+        the general quality of a dataset, for instance by determining the number of
+        records that do not conform to previously established constraints. The second
+        part of the lecture examines various methods and algorithms to improve the
+        quality of data, with an emphasis on the many existing duplicate detection
+        approaches.</itunes:summary><itunes:owner><itunes:name>HPI, tele-TASK</itunes:name><itunes:email>itunesu2008@hpi.uni-potsdam.de</itunes:email></itunes:owner><itunes:image
+        href=\"http://img4.tele-task.de/media/series/0000948_2013_4_12_268982.jpg\"></itunes:image><itunes:category
+        text=\"Education\"><itunes:category text=\"Education Technology\"></itunes:category><itunes:category
+        text=\"Higher Education\"></itunes:category></itunes:category><itunes:explicit>no</itunes:explicit></channel></rss>"
+    http_version: 
+  recorded_at: Wed, 10 Jul 2013 16:06:58 GMT
+recorded_with: VCR 2.5.0

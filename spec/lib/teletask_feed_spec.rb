@@ -10,7 +10,7 @@ VCR.configure do |c|
 end
 
 TEST_URL_DEPENDABLE_SYSTEMS = "http://tele-task.de/feeds/series/946/"
-TEST_URL_DEPENDABLE_SYSTEMS = "http://tele-task.de/feeds/series/946/"
+TEST_URL_DATA_PROFILING = "http://tele-task.de/feeds/series/948/"
 
 describe TeletaskFeed do
   it "initializes" do
@@ -31,6 +31,14 @@ describe TeletaskFeed do
       tracks.first["title"].should == [ "2013-04-09 Definitions and Metrics #1/6: Dependability" ]
       tracks.first["location"].should == [ "http://stream.hpi.uni-potsdam.de:8080/download/podcast/SS_2013/DPS_SS13/DPS_2013_04_09/DPS_2013_04_09_part_1_podcast.mp4" ]
       tracks.first["duration"].should == [ 759000 ]
+    end
+  end
+
+  it "throws exception if no tracks" do
+    VCR.use_cassette('data_profiling') do
+      expect do
+        TeletaskFeed.new(TEST_URL_DATA_PROFILING).parse_tracks
+      end.to raise_error(Exception)
     end
   end
 end
