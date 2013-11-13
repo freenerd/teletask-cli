@@ -81,9 +81,28 @@ class TeletaskFeed
     uri = URI(@location)
     raise "Location must be valid uri, but is #{@location}" unless uri
 
-    @input_xml = XmlSimple.xml_in(Net::HTTP.get(uri))
+    @input_xml = XmlSimple.xml_in(get_with_redirects(uri, 3))
 
     puts "Fetching feed. Finished"
+  end
+
+  def get_with_redirects(uri, limit)
+    # copied from http://ruby-doc.org/stdlib-2.0.0/libdoc/net/http/rdoc/Net/HTTP.html#label-Following+Redirection
+
+    raise ArgumentError, 'too many HTTP redirects' if limit == 0
+
+    response = Net::HTTP.get_response(uri)
+
+    case response
+    when Net::HTTPSuccess then
+      response.body
+    when Net::HTTPRedirection then
+      location = response['location']
+      warn "redirected to #{location}"
+      get_with_redirects(URI(location), limit - 1)
+    else
+      response.value
+    end
   end
 
   # Converts duration strings like 00:09:26 to milliseconds
